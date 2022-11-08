@@ -1,0 +1,62 @@
+﻿@model ExpenseTracker.Models.Expense
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DateOfExpense" class="control-label">Date Of Expense</label>
+                <input asp-for="DateOfExpense" type="date" id="dateFeild" max="2022-10-02" class="form-control" />
+                <span asp-validation-for="DateOfExpense" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExpenseAmount" class="control-label"> Expense Amount</label>
+                <input asp-for="ExpenseAmount" class="form-control" />
+                <span asp-validation-for="ExpenseAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ExpenseCategoryId" class="control-label">Expense Category</label>
+                <select id="ExpenseCategoryId" Name="ExpenseCategoryId" class="form-control" asp-items="ViewBag.ExpenseCategories"></select>
+                <span asp-validation-for="ExpenseCategoryId" class="text-danger"></span>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" style="text-decoration:none">Back to List</a>
+</div>
+<script>
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("dateFeild").setAttribute("max", today);
+                //alert("test");
+</script>
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+    

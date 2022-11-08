@@ -1,0 +1,48 @@
+﻿@model IEnumerable<ExpenseTracker.Models.Expense>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+    <br />
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            
+            <th>
+               Date of expense
+            </th>
+            <th>
+                Amount
+            </th>
+            <th>
+                Category Name
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfExpense)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExpenseAmount)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.ExpenseCategory.ExpenseCategoryName)
+            </td>
+            <td>
+                    @Html.ActionLink("Edit", "Edit", new {  id=item.ExpenseId  }) |
+                  @*  @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@
+                    @Html.ActionLink("Delete", "Delete", new {  id=item.ExpenseId  })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
