@@ -28,6 +28,7 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <td>
                 @Html.DisplayFor(modelItem => item.DateOfExpense)
             </td>
@@ -37,6 +38,8 @@
             <td>
                     @Html.DisplayFor(modelItem => item.ExpenseCategory.ExpenseCategoryName)
             </td>
+                
+                @*<span asp-validation-for="ExpenseCategoryName" class="text-danger"></span>*@
             <td>
                     @Html.ActionLink("Edit", "Edit", new {  id=item.ExpenseId  }) |
                   @*  @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |*@

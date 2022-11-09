@@ -20,29 +20,34 @@ namespace ExpenseTracker.Controllers
             _expense = expense;
         }
 
-        // GET: ExpenseCategories
         public IActionResult Index()
         {
               return View(_expense.GetAll());
         }
 
-        
-
-        // GET: ExpenseCategories/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: ExpenseCategories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+     
         [HttpPost]
         public IActionResult Create(ExpenseCategory expenseCategory)
         {
             if (ModelState.IsValid)
             {
-                _expense.Create(expenseCategory);
+                var AlreadyExists = _expense.GetAll().Where(x => x.ExpenseCategoryName == expenseCategory.ExpenseCategoryName).FirstOrDefault();
+                if (AlreadyExists == null)
+                {
+                    _expense.Create(expenseCategory);
+                }
+                else
+                {
+
+                    ViewBag.Message = string.Format(" This Category Is Already Exists !!! Please Enter New One ", expenseCategory);
+                    return View();
+                }
+               
                 return RedirectToAction("Index");
             }
             return View(expenseCategory);

@@ -40,7 +40,20 @@ namespace ExpenseTracker.Controllers
         [HttpPost]
         public IActionResult Create(Expense exp)
         {
-            Repository.Create(exp);
+            var AlreadyExists = Repository.GetAll().Where(x => x.ExpenseCategoryId == exp.ExpenseCategoryId).FirstOrDefault();
+            if (AlreadyExists == null)
+            {
+
+                Repository.Create(exp);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+
+                ViewBag.Message = string.Format(" This Category Is Already Exists !!! Firstly, Please CREATE New Category In EXPENSE CATEGORY Page ", exp);
+                return View();
+            }
+           
             return RedirectToAction("Index");
         }
 
